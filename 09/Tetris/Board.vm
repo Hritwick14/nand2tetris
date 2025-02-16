@@ -1,0 +1,1282 @@
+function Board.new 3
+    push constant 16
+    call Memory.alloc 1
+    pop pointer 0
+    push constant 23
+    call String.new 1
+    push constant 49
+    call String.appendChar 2
+    push constant 49
+    call String.appendChar 2
+    push constant 48
+    call String.appendChar 2
+    push constant 51
+    call String.appendChar 2
+    push constant 50
+    call String.appendChar 2
+    push constant 53
+    call String.appendChar 2
+    push constant 52
+    call String.appendChar 2
+    push constant 51
+    call String.appendChar 2
+    push constant 50
+    call String.appendChar 2
+    push constant 49
+    call String.appendChar 2
+    push constant 48
+    call String.appendChar 2
+    push constant 48
+    call String.appendChar 2
+    push constant 48
+    call String.appendChar 2
+    push constant 49
+    call String.appendChar 2
+    push constant 49
+    call String.appendChar 2
+    push constant 50
+    call String.appendChar 2
+    push constant 50
+    call String.appendChar 2
+    push constant 51
+    call String.appendChar 2
+    push constant 51
+    call String.appendChar 2
+    push constant 52
+    call String.appendChar 2
+    push constant 52
+    call String.appendChar 2
+    push constant 53
+    call String.appendChar 2
+    push constant 53
+    call String.appendChar 2
+    pop this 14
+    push constant 0
+    pop this 15
+    push constant 0
+    pop this 8
+    push constant 0
+    pop this 9
+    push constant 0
+    pop this 10
+    push argument 0
+    pop this 0
+    push argument 1
+    pop this 1
+    push argument 2
+    pop this 4
+    push argument 3
+    pop this 5
+    push argument 4
+    pop this 2
+    push argument 5
+    pop this 3
+    push argument 4
+    push argument 3
+    call Math.divide 2
+    pop this 6
+    push argument 5
+    push argument 2
+    call Math.divide 2
+    pop this 7
+    push constant 0
+    pop this 13
+    push argument 2
+    push argument 3
+    call Math.multiply 2
+    call Array.new 1
+    pop this 11
+    push constant 0
+    pop local 0
+label Board_0
+    push local 0
+    push argument 2
+    lt
+    not
+    if-goto Board_1
+    push constant 0
+    pop local 1
+label Board_2
+    push local 1
+    push argument 3
+    lt
+    not
+    if-goto Board_3
+    push local 0
+    push argument 3
+    call Math.multiply 2
+    push local 1
+    add
+    pop local 2
+    push local 2
+    push this 11
+    add
+    push constant 0
+    pop temp 0
+    pop pointer 1
+    push temp 0
+    pop that 0
+    push local 1
+    push constant 1
+    add
+    pop local 1
+    goto Board_2
+label Board_3
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Board_0
+label Board_1
+    push pointer 0
+    return
+function Board.movePieceLeft 3
+    push argument 0
+    pop pointer 0
+    push this 12
+    call Piece.getCoords 1
+    pop local 0
+    push constant 1
+    neg
+    pop local 2
+    push constant 0
+    push local 0
+    add
+    pop pointer 1
+    push that 0
+    push this 5
+    call Math.multiply 2
+    push constant 1
+    push local 0
+    add
+    pop pointer 1
+    push that 0
+    push constant 1
+    sub
+    add
+    pop local 1
+    push constant 1
+    push local 0
+    add
+    pop pointer 1
+    push that 0
+    push constant 1
+    sub
+    push constant 1
+    neg
+    gt
+    not
+    push local 1
+    push this 11
+    add
+    pop pointer 1
+    push that 0
+    push constant 1
+    eq
+    or
+    not
+    if-goto Board_5
+    push constant 0
+    pop local 2
+    goto Board_4
+label Board_5
+label Board_4
+    push constant 2
+    push local 0
+    add
+    pop pointer 1
+    push that 0
+    push this 5
+    call Math.multiply 2
+    push constant 3
+    push local 0
+    add
+    pop pointer 1
+    push that 0
+    push constant 1
+    sub
+    add
+    pop local 1
+    push constant 3
+    push local 0
+    add
+    pop pointer 1
+    push that 0
+    push constant 1
+    sub
+    push constant 1
+    neg
+    gt
+    not
+    push local 1
+    push this 11
+    add
+    pop pointer 1
+    push that 0
+    push constant 1
+    eq
+    or
+    not
+    if-goto Board_7
+    push constant 0
+    pop local 2
+    goto Board_6
+label Board_7
+label Board_6
+    push constant 4
+    push local 0
+    add
+    pop pointer 1
+    push that 0
+    push this 5
+    call Math.multiply 2
+    push constant 5
+    push local 0
+    add
+    pop pointer 1
+    push that 0
+    push constant 1
+    sub
+    add
+    pop local 1
+    push constant 5
+    push local 0
+    add
+    pop pointer 1
+    push that 0
+    push constant 1
+    sub
+    push constant 1
+    neg
+    gt
+    not
+    push local 1
+    push this 11
+    add
+    pop pointer 1
+    push that 0
+    push constant 1
+    eq
+    or
+    not
+    if-goto Board_9
+    push constant 0
+    pop local 2
+    goto Board_8
+label Board_9
+label Board_8
+    push constant 6
+    push local 0
+    add
+    pop pointer 1
+    push that 0
+    push this 5
+    call Math.multiply 2
+    push constant 7
+    push local 0
+    add
+    pop pointer 1
+    push that 0
+    push constant 1
+    sub
+    add
+    pop local 1
+    push constant 7
+    push local 0
+    add
+    pop pointer 1
+    push that 0
+    push constant 1
+    sub
+    push constant 1
+    neg
+    gt
+    not
+    push local 1
+    push this 11
+    add
+    pop pointer 1
+    push that 0
+    push constant 1
+    eq
+    or
+    not
+    if-goto Board_11
+    push constant 0
+    pop local 2
+    goto Board_10
+label Board_11
+label Board_10
+    push local 2
+    push constant 1
+    neg
+    eq
+    not
+    if-goto Board_13
+    push this 12
+    call Piece.moveLeft 1
+    pop temp 0
+    goto Board_12
+label Board_13
+label Board_12
+    push local 0
+    call Array.dispose 1
+    pop temp 0
+    push constant 0
+    return
+function Board.movePieceRight 3
+    push argument 0
+    pop pointer 0
+    push this 12
+    call Piece.getCoords 1
+    pop local 0
+    push constant 1
+    neg
+    pop local 2
+    push constant 0
+    push local 0
+    add
+    pop pointer 1
+    push that 0
+    push this 5
+    call Math.multiply 2
+    push constant 1
+    push local 0
+    add
+    pop pointer 1
+    push that 0
+    push constant 1
+    add
+    add
+    pop local 1
+    push constant 1
+    push local 0
+    add
+    pop pointer 1
+    push that 0
+    push constant 1
+    add
+    push this 5
+    lt
+    not
+    push local 1
+    push this 11
+    add
+    pop pointer 1
+    push that 0
+    push constant 1
+    eq
+    or
+    not
+    if-goto Board_15
+    push constant 0
+    pop local 2
+    goto Board_14
+label Board_15
+label Board_14
+    push constant 2
+    push local 0
+    add
+    pop pointer 1
+    push that 0
+    push this 5
+    call Math.multiply 2
+    push constant 3
+    push local 0
+    add
+    pop pointer 1
+    push that 0
+    push constant 1
+    add
+    add
+    pop local 1
+    push constant 3
+    push local 0
+    add
+    pop pointer 1
+    push that 0
+    push constant 1
+    add
+    push this 5
+    lt
+    not
+    push local 1
+    push this 11
+    add
+    pop pointer 1
+    push that 0
+    push constant 1
+    eq
+    or
+    not
+    if-goto Board_17
+    push constant 0
+    pop local 2
+    goto Board_16
+label Board_17
+label Board_16
+    push constant 4
+    push local 0
+    add
+    pop pointer 1
+    push that 0
+    push this 5
+    call Math.multiply 2
+    push constant 5
+    push local 0
+    add
+    pop pointer 1
+    push that 0
+    push constant 1
+    add
+    add
+    pop local 1
+    push constant 5
+    push local 0
+    add
+    pop pointer 1
+    push that 0
+    push constant 1
+    add
+    push this 5
+    lt
+    not
+    push local 1
+    push this 11
+    add
+    pop pointer 1
+    push that 0
+    push constant 1
+    eq
+    or
+    not
+    if-goto Board_19
+    push constant 0
+    pop local 2
+    goto Board_18
+label Board_19
+label Board_18
+    push constant 6
+    push local 0
+    add
+    pop pointer 1
+    push that 0
+    push this 5
+    call Math.multiply 2
+    push constant 7
+    push local 0
+    add
+    pop pointer 1
+    push that 0
+    push constant 1
+    add
+    add
+    pop local 1
+    push constant 7
+    push local 0
+    add
+    pop pointer 1
+    push that 0
+    push constant 1
+    add
+    push this 5
+    lt
+    not
+    push local 1
+    push this 11
+    add
+    pop pointer 1
+    push that 0
+    push constant 1
+    eq
+    or
+    not
+    if-goto Board_21
+    push constant 0
+    pop local 2
+    goto Board_20
+label Board_21
+label Board_20
+    push local 2
+    push constant 1
+    neg
+    eq
+    not
+    if-goto Board_23
+    push this 12
+    call Piece.moveRight 1
+    pop temp 0
+    goto Board_22
+label Board_23
+label Board_22
+    push local 0
+    call Array.dispose 1
+    pop temp 0
+    push constant 0
+    return
+function Board.rotatePieceClockwise 0
+    push argument 0
+    pop pointer 0
+    push this 12
+    push this 4
+    push constant 1
+    sub
+    push this 5
+    push constant 1
+    sub
+    push constant 1
+    call Piece.rotate 4
+    pop temp 0
+    push constant 0
+    return
+function Board.rotatePieceAntiClockwise 0
+    push argument 0
+    pop pointer 0
+    push this 12
+    push this 4
+    push constant 1
+    sub
+    push this 5
+    push constant 1
+    sub
+    push constant 1
+    neg
+    call Piece.rotate 4
+    pop temp 0
+    push constant 0
+    return
+function Board.tick 5
+    push argument 0
+    pop pointer 0
+    push this 9
+    push constant 1
+    add
+    pop this 9
+    push constant 0
+    pop local 0
+label Board_24
+    push local 0
+    push this 4
+    lt
+    not
+    if-goto Board_25
+    push constant 1
+    neg
+    pop local 3
+    push constant 0
+    pop local 1
+label Board_26
+    push local 1
+    push this 5
+    lt
+    not
+    if-goto Board_27
+    push local 0
+    push this 5
+    call Math.multiply 2
+    push local 1
+    add
+    pop local 2
+    push local 2
+    push this 11
+    add
+    pop pointer 1
+    push that 0
+    push constant 0
+    eq
+    not
+    if-goto Board_29
+    push constant 0
+    pop local 3
+    goto Board_28
+label Board_29
+label Board_28
+    push local 1
+    push constant 1
+    add
+    pop local 1
+    goto Board_26
+label Board_27
+    push local 3
+    push constant 1
+    neg
+    eq
+    not
+    if-goto Board_31
+    push pointer 0
+    push local 0
+    call Board.clearRow 2
+    pop temp 0
+    push this 8
+    push constant 100
+    add
+    pop this 8
+    push this 10
+    push constant 1
+    add
+    pop this 10
+    goto Board_30
+label Board_31
+label Board_30
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Board_24
+label Board_25
+    push this 9
+    push constant 10
+    push this 10
+    sub
+    eq
+    not
+    if-goto Board_33
+    push constant 0
+    pop this 9
+    push this 13
+    push constant 1
+    neg
+    eq
+    not
+    if-goto Board_35
+    push this 12
+    call Piece.getCoords 1
+    pop local 4
+    push constant 1
+    neg
+    pop local 3
+    push constant 0
+    push local 4
+    add
+    pop pointer 1
+    push that 0
+    push constant 1
+    add
+    push this 5
+    call Math.multiply 2
+    push constant 1
+    push local 4
+    add
+    pop pointer 1
+    push that 0
+    add
+    pop local 2
+    push constant 0
+    push local 4
+    add
+    pop pointer 1
+    push that 0
+    push constant 1
+    add
+    push this 4
+    lt
+    not
+    push local 2
+    push this 11
+    add
+    pop pointer 1
+    push that 0
+    push constant 1
+    eq
+    or
+    not
+    if-goto Board_37
+    push constant 0
+    pop local 3
+    goto Board_36
+label Board_37
+label Board_36
+    push constant 2
+    push local 4
+    add
+    pop pointer 1
+    push that 0
+    push constant 1
+    add
+    push this 5
+    call Math.multiply 2
+    push constant 3
+    push local 4
+    add
+    pop pointer 1
+    push that 0
+    add
+    pop local 2
+    push constant 2
+    push local 4
+    add
+    pop pointer 1
+    push that 0
+    push constant 1
+    add
+    push this 4
+    lt
+    not
+    push local 2
+    push this 11
+    add
+    pop pointer 1
+    push that 0
+    push constant 1
+    eq
+    or
+    not
+    if-goto Board_39
+    push constant 0
+    pop local 3
+    goto Board_38
+label Board_39
+label Board_38
+    push constant 4
+    push local 4
+    add
+    pop pointer 1
+    push that 0
+    push constant 1
+    add
+    push this 5
+    call Math.multiply 2
+    push constant 5
+    push local 4
+    add
+    pop pointer 1
+    push that 0
+    add
+    pop local 2
+    push constant 4
+    push local 4
+    add
+    pop pointer 1
+    push that 0
+    push constant 1
+    add
+    push this 4
+    lt
+    not
+    push local 2
+    push this 11
+    add
+    pop pointer 1
+    push that 0
+    push constant 1
+    eq
+    or
+    not
+    if-goto Board_41
+    push constant 0
+    pop local 3
+    goto Board_40
+label Board_41
+label Board_40
+    push constant 6
+    push local 4
+    add
+    pop pointer 1
+    push that 0
+    push constant 1
+    add
+    push this 5
+    call Math.multiply 2
+    push constant 7
+    push local 4
+    add
+    pop pointer 1
+    push that 0
+    add
+    pop local 2
+    push constant 6
+    push local 4
+    add
+    pop pointer 1
+    push that 0
+    push constant 1
+    add
+    push this 4
+    lt
+    not
+    push local 2
+    push this 11
+    add
+    pop pointer 1
+    push that 0
+    push constant 1
+    eq
+    or
+    not
+    if-goto Board_43
+    push constant 0
+    pop local 3
+    goto Board_42
+label Board_43
+label Board_42
+    push local 3
+    push constant 1
+    neg
+    eq
+    not
+    if-goto Board_45
+    push this 12
+    call Piece.fallOne 1
+    pop temp 0
+    goto Board_44
+label Board_45
+    push constant 0
+    push local 4
+    add
+    pop pointer 1
+    push that 0
+    push this 5
+    call Math.multiply 2
+    push constant 1
+    push local 4
+    add
+    pop pointer 1
+    push that 0
+    add
+    push this 11
+    add
+    push constant 1
+    pop temp 0
+    pop pointer 1
+    push temp 0
+    pop that 0
+    push constant 2
+    push local 4
+    add
+    pop pointer 1
+    push that 0
+    push this 5
+    call Math.multiply 2
+    push constant 3
+    push local 4
+    add
+    pop pointer 1
+    push that 0
+    add
+    push this 11
+    add
+    push constant 1
+    pop temp 0
+    pop pointer 1
+    push temp 0
+    pop that 0
+    push constant 4
+    push local 4
+    add
+    pop pointer 1
+    push that 0
+    push this 5
+    call Math.multiply 2
+    push constant 5
+    push local 4
+    add
+    pop pointer 1
+    push that 0
+    add
+    push this 11
+    add
+    push constant 1
+    pop temp 0
+    pop pointer 1
+    push temp 0
+    pop that 0
+    push constant 6
+    push local 4
+    add
+    pop pointer 1
+    push that 0
+    push this 5
+    call Math.multiply 2
+    push constant 7
+    push local 4
+    add
+    pop pointer 1
+    push that 0
+    add
+    push this 11
+    add
+    push constant 1
+    pop temp 0
+    pop pointer 1
+    push temp 0
+    pop that 0
+    push constant 0
+    pop this 13
+    push this 12
+    call Piece.dispose 1
+    pop temp 0
+label Board_44
+    push local 4
+    call Array.dispose 1
+    pop temp 0
+    goto Board_34
+label Board_35
+    push this 14
+    push this 15
+    call String.charAt 2
+    push constant 48
+    sub
+    push constant 0
+    push this 5
+    push constant 2
+    call Math.divide 2
+    call Piece.new 3
+    pop this 12
+    push this 15
+    push constant 1
+    add
+    pop this 15
+    push this 15
+    push this 14
+    call String.length 1
+    push constant 1
+    sub
+    eq
+    not
+    if-goto Board_47
+    push constant 0
+    pop this 15
+    goto Board_46
+label Board_47
+label Board_46
+    push constant 1
+    neg
+    pop this 13
+label Board_34
+    goto Board_32
+label Board_33
+label Board_32
+    push constant 0
+    return
+function Board.drawBoard 5
+    push argument 0
+    pop pointer 0
+    push constant 17
+    push constant 18
+    call Output.moveCursor 2
+    pop temp 0
+    push constant 7
+    call String.new 1
+    push constant 83
+    call String.appendChar 2
+    push constant 99
+    call String.appendChar 2
+    push constant 111
+    call String.appendChar 2
+    push constant 114
+    call String.appendChar 2
+    push constant 101
+    call String.appendChar 2
+    push constant 58
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    call Output.printString 1
+    pop temp 0
+    push this 8
+    call Output.printInt 1
+    pop temp 0
+    push constant 10
+    call Sys.wait 1
+    pop temp 0
+    push constant 0
+    call Screen.setColor 1
+    pop temp 0
+    push this 0
+    push this 1
+    push this 0
+    push this 2
+    add
+    push this 1
+    push this 3
+    add
+    call Screen.drawRectangle 4
+    pop temp 0
+    push constant 1
+    neg
+    call Screen.setColor 1
+    pop temp 0
+    push constant 0
+    pop local 0
+label Board_48
+    push local 0
+    push this 4
+    lt
+    not
+    if-goto Board_49
+    push constant 0
+    pop local 1
+label Board_50
+    push local 1
+    push this 5
+    lt
+    not
+    if-goto Board_51
+    push local 0
+    push this 5
+    call Math.multiply 2
+    push local 1
+    add
+    pop local 3
+    push local 3
+    push this 11
+    add
+    pop pointer 1
+    push that 0
+    push constant 1
+    eq
+    not
+    if-goto Board_53
+    push this 0
+    push local 1
+    push this 6
+    call Math.multiply 2
+    add
+    push this 1
+    push local 0
+    push this 7
+    call Math.multiply 2
+    add
+    push this 6
+    push this 7
+    call Board.drawBox 4
+    pop temp 0
+    goto Board_52
+label Board_53
+label Board_52
+    push local 1
+    push constant 1
+    add
+    pop local 1
+    goto Board_50
+label Board_51
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Board_48
+label Board_49
+    push this 13
+    push constant 1
+    neg
+    eq
+    not
+    if-goto Board_55
+    push this 12
+    call Piece.getCoords 1
+    pop local 4
+    push this 0
+    push constant 1
+    push local 4
+    add
+    pop pointer 1
+    push that 0
+    push this 6
+    call Math.multiply 2
+    add
+    push this 1
+    push constant 0
+    push local 4
+    add
+    pop pointer 1
+    push that 0
+    push this 7
+    call Math.multiply 2
+    add
+    push this 6
+    push this 7
+    call Board.drawBox 4
+    pop temp 0
+    push this 0
+    push constant 3
+    push local 4
+    add
+    pop pointer 1
+    push that 0
+    push this 6
+    call Math.multiply 2
+    add
+    push this 1
+    push constant 2
+    push local 4
+    add
+    pop pointer 1
+    push that 0
+    push this 7
+    call Math.multiply 2
+    add
+    push this 6
+    push this 7
+    call Board.drawBox 4
+    pop temp 0
+    push this 0
+    push constant 5
+    push local 4
+    add
+    pop pointer 1
+    push that 0
+    push this 6
+    call Math.multiply 2
+    add
+    push this 1
+    push constant 4
+    push local 4
+    add
+    pop pointer 1
+    push that 0
+    push this 7
+    call Math.multiply 2
+    add
+    push this 6
+    push this 7
+    call Board.drawBox 4
+    pop temp 0
+    push this 0
+    push constant 7
+    push local 4
+    add
+    pop pointer 1
+    push that 0
+    push this 6
+    call Math.multiply 2
+    add
+    push this 1
+    push constant 6
+    push local 4
+    add
+    pop pointer 1
+    push that 0
+    push this 7
+    call Math.multiply 2
+    add
+    push this 6
+    push this 7
+    call Board.drawBox 4
+    pop temp 0
+    goto Board_54
+label Board_55
+label Board_54
+    push local 4
+    call Array.dispose 1
+    pop temp 0
+    push constant 0
+    return
+function Board.isGameOver 2
+    push argument 0
+    pop pointer 0
+    push constant 0
+    pop local 1
+    push constant 0
+    pop local 0
+label Board_56
+    push local 0
+    push this 5
+    lt
+    not
+    if-goto Board_57
+    push local 0
+    push this 11
+    add
+    pop pointer 1
+    push that 0
+    push constant 1
+    eq
+    not
+    if-goto Board_59
+    push constant 1
+    neg
+    pop local 1
+    goto Board_58
+label Board_59
+label Board_58
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Board_56
+label Board_57
+    push local 1
+    return
+function Board.clearRow 4
+    push argument 0
+    pop pointer 0
+    push argument 1
+    pop local 0
+label Board_60
+    push local 0
+    push constant 0
+    gt
+    not
+    if-goto Board_61
+    push constant 0
+    pop local 1
+label Board_62
+    push local 1
+    push this 5
+    lt
+    not
+    if-goto Board_63
+    push local 0
+    push this 5
+    call Math.multiply 2
+    push local 1
+    add
+    pop local 3
+    push local 0
+    push constant 1
+    sub
+    push this 5
+    call Math.multiply 2
+    push local 1
+    add
+    pop local 2
+    push local 3
+    push this 11
+    add
+    push local 2
+    push this 11
+    add
+    pop pointer 1
+    push that 0
+    pop temp 0
+    pop pointer 1
+    push temp 0
+    pop that 0
+    push local 1
+    push constant 1
+    add
+    pop local 1
+    goto Board_62
+label Board_63
+    push local 0
+    push constant 1
+    sub
+    pop local 0
+    goto Board_60
+label Board_61
+    push constant 0
+    return
+function Board.dispose 0
+    push argument 0
+    pop pointer 0
+    push this 11
+    call Array.dispose 1
+    pop temp 0
+    push pointer 0
+    call Memory.deAlloc 1
+    pop temp 0
+    push constant 0
+    return
+function Board.drawBox 0
+    push argument 0
+    push argument 1
+    push argument 0
+    push argument 2
+    add
+    push argument 1
+    push argument 3
+    add
+    call Screen.drawRectangle 4
+    pop temp 0
+    push constant 0
+    return

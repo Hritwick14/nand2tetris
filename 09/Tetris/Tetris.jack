@@ -1,0 +1,182 @@
+class Tetris {
+    static int windowWidth, windowHeight;
+    static int paddingx, paddingy;
+    static int boardWidth, boardHeight;
+
+    function void start(){
+        var Board b;
+        var boolean quit;
+        var int key;
+
+        //configuration variables
+        let windowWidth = 511; //0 to 511 pixels is the window vertical length
+        let windowHeight = 255; //0 to 255 pixels is the window horizontal length
+        let paddingx = 3;
+        let paddingy = 5;
+        let boardHeight = windowHeight - (2 * paddingy);
+        let boardWidth = boardHeight / 2;
+
+        do Tetris.drawTitle();
+        do Tetris.drawControlText();
+        do Tetris.drawUI(paddingx, paddingy, boardWidth);
+
+        let b = Board.new(1 + paddingx, 1 + paddingy, 20, 10, boardWidth - 2, boardHeight - 2);
+
+        let quit = false;
+        while(~(quit)){
+            while(key = 0){ // key down event
+                let key = Keyboard.keyPressed();
+
+                do b.tick();
+                do b.drawBoard();
+
+                // do Output.moveCursor(1,20);
+                // do Output.printInt(b.isGameOver());
+
+                // do Output.moveCursor(2,20);
+                // do Output.printString("A");
+            
+                if(b.isGameOver()){
+                    let quit = true;
+                    let key = -2;
+                }
+            }
+
+            if(key = 130){ do b.movePieceLeft(); } // left arrow
+            if(key = 131){ do b.rotatePieceClockwise(); } // up arrow
+            if(key = 132){ do b.movePieceRight(); } // right arrow
+            if(key = 133){ do b.rotatePieceAntiClockwise(); } // down arrow
+
+            if((key = 81) | (key = 113)){ let quit = true; } // quit with "Q" or "q"
+
+            while(~(key = 0)){ //key up event
+                let key = Keyboard.keyPressed();
+
+                do b.tick();
+                do b.drawBoard();
+
+                // do Output.moveCursor(2,20);
+                // do Output.printString("B");
+                if(b.isGameOver()){
+                    let quit = true;
+                    let key = 0;
+                }
+            }
+        }
+
+        do Output.moveCursor(17,50);
+        do Output.printString("Game Over");
+
+        do b.dispose();
+
+        return;
+    }
+
+    function void drawTitle(){
+        var int x,y;
+
+        //T
+        let x = 1;
+        let y = 8;
+        do Tetris.drawBlock(x, y);
+        do Tetris.drawBlock(x, y+1);
+        do Tetris.drawBlock(x, y+2);
+        do Tetris.drawBlock(x+1, y+1);
+        do Tetris.drawBlock(x+2, y+1);
+        do Tetris.drawBlock(x+3, y+1);
+        do Tetris.drawBlock(x+4, y+1);
+        let y = y+4;
+        //E
+        do Tetris.drawBlock(x, y);
+        do Tetris.drawBlock(x+1, y);
+        do Tetris.drawBlock(x+2, y);
+        do Tetris.drawBlock(x+3, y);
+        do Tetris.drawBlock(x+4, y);
+        do Tetris.drawBlock(x, y+1);
+        do Tetris.drawBlock(x, y+2);
+        do Tetris.drawBlock(x+2, y+1);
+        do Tetris.drawBlock(x+4, y+1);
+        do Tetris.drawBlock(x+4, y+2);
+        let y = y+4;
+        //T
+        do Tetris.drawBlock(x, y);
+        do Tetris.drawBlock(x, y+1);
+        do Tetris.drawBlock(x, y+2);
+        do Tetris.drawBlock(x+1, y+1);
+        do Tetris.drawBlock(x+2, y+1);
+        do Tetris.drawBlock(x+3, y+1);
+        do Tetris.drawBlock(x+4, y+1);
+        let y = y+4;
+        //R
+        do Tetris.drawBlock(x, y);
+        do Tetris.drawBlock(x+1, y);
+        do Tetris.drawBlock(x+2, y);
+        do Tetris.drawBlock(x+3, y);
+        do Tetris.drawBlock(x+4, y);
+        do Tetris.drawBlock(x, y+1);
+        do Tetris.drawBlock(x+1, y+2);
+        do Tetris.drawBlock(x+2, y+1);
+        do Tetris.drawBlock(x+3, y+2);
+        do Tetris.drawBlock(x+4, y+2);
+        let y = y+4;
+        //I
+        do Tetris.drawBlock(x, y);
+        do Tetris.drawBlock(x, y+1);
+        do Tetris.drawBlock(x, y+2);
+        do Tetris.drawBlock(x+1, y+1);
+        do Tetris.drawBlock(x+2, y+1);
+        do Tetris.drawBlock(x+3, y+1);
+        do Tetris.drawBlock(x+4, y);
+        do Tetris.drawBlock(x+4, y+1);
+        do Tetris.drawBlock(x+4, y+2);
+        let y = y+4;
+        //S
+        do Tetris.drawBlock(x, y+1);
+        do Tetris.drawBlock(x, y+2);
+        do Tetris.drawBlock(x+1, y);
+        do Tetris.drawBlock(x+2, y+1);
+        do Tetris.drawBlock(x+3, y+2);
+        do Tetris.drawBlock(x+4, y+1);
+        do Tetris.drawBlock(x+4, y);
+
+        return;
+    }
+
+    function void drawControlText(){
+        do Output.moveCursor(10,18);
+        do Output.printString("Controls:-");
+        do Output.moveCursor(11,18);
+        do Output.printString("Left Arrow - Move Left");
+        do Output.moveCursor(12,18);
+        do Output.printString("Right Arrow - Move Right");
+        do Output.moveCursor(13,18);
+        do Output.printString("Up Arrow - Rotate");
+        do Output.moveCursor(14,18);
+        do Output.printString("Q - quit");
+
+        return;
+    }
+
+    function void drawUI(int px, int py, int bw){
+        do Screen.drawLine(px, py, windowWidth - px, py);
+        do Screen.drawLine(windowWidth - px, py, windowWidth - px, windowHeight - py);
+        do Screen.drawLine(windowWidth - px, windowHeight - py, px, windowHeight - py);
+        do Screen.drawLine(px, windowHeight - py, px, py);
+        do Screen.drawLine(px + bw, py, px + bw, windowHeight - py);
+        
+        return;
+    }
+
+    function void drawBlock(int row, int column){
+        var int memAddress, i;
+        let memAddress = 16384 + column + (row * 512);
+        let i = 0;
+        while(i < 16){
+            do Memory.poke(memAddress, -1);
+            let memAddress = memAddress + 32;
+            let i = i + 1;
+        }
+
+        return;
+    }
+}

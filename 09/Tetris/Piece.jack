@@ -1,0 +1,229 @@
+class Piece {
+    field Array coords; // 0,1 is x,y of 1st block, 2,3 is x,y of 2nd block, etc.. x denotes row, y denotes column
+    field int pieceType;
+
+    constructor Piece new(int pt, int sx, int sy){
+        let pieceType = pt;
+        let coords = Array.new(8);
+
+        if(pt = 0){ // O piece
+            let coords[0] = sx;
+            let coords[1] = sy;
+            let coords[2] = sx;
+            let coords[3] = sy + 1;
+            let coords[4] = sx + 1;
+            let coords[5] = sy;
+            let coords[6] = sx + 1;
+            let coords[7] = sy + 1;
+
+        }
+        if(pt = 1){ // I piece
+            let coords[0] = sx;
+            let coords[1] = sy;
+            let coords[2] = sx;
+            let coords[3] = sy + 1;
+            let coords[4] = sx;
+            let coords[5] = sy + 2;
+            let coords[6] = sx;
+            let coords[7] = sy + 3;
+
+        }
+        if(pt = 2){ // L piece
+            let coords[0] = sx;
+            let coords[1] = sy;
+            let coords[2] = sx + 1;
+            let coords[3] = sy;
+            let coords[4] = sx + 2;
+            let coords[5] = sy;
+            let coords[6] = sx + 2;
+            let coords[7] = sy + 1;
+
+        }
+        if(pt = 3){ // J piece
+            let coords[0] = sx;
+            let coords[1] = sy;
+            let coords[2] = sx + 1;
+            let coords[3] = sy;
+            let coords[4] = sx + 2;
+            let coords[5] = sy;
+            let coords[6] = sx + 2;
+            let coords[7] = sy - 1;
+
+        }
+        if(pt = 4){ // S piece
+            let coords[0] = sx;
+            let coords[1] = sy;
+            let coords[2] = sx + 1;
+            let coords[3] = sy;
+            let coords[4] = sx + 1;
+            let coords[5] = sy - 1;
+            let coords[6] = sx;
+            let coords[7] = sy + 1;
+
+        }
+        if(pt = 5){ // Z piece
+            let coords[0] = sx;
+            let coords[1] = sy;
+            let coords[2] = sx + 1;
+            let coords[3] = sy;
+            let coords[4] = sx + 1;
+            let coords[5] = sy + 1;
+            let coords[6] = sx;
+            let coords[7] = sy - 1;
+
+        }
+        
+        return this;
+    }
+
+    method Array getCoords(){
+        return coords;
+    }
+
+    method void fallOne(){
+        let coords[0] = coords[0] + 1;
+        let coords[2] = coords[2] + 1;
+        let coords[4] = coords[4] + 1;
+        let coords[6] = coords[6] + 1;
+
+        return;
+    }
+
+    method void moveLeft(){
+        let coords[1] = coords[1] - 1;
+        let coords[3] = coords[3] - 1;
+        let coords[5] = coords[5] - 1;
+        let coords[7] = coords[7] - 1;
+        return;
+    }
+
+    method void moveRight(){
+        let coords[1] = coords[1] + 1;
+        let coords[3] = coords[3] + 1;
+        let coords[5] = coords[5] + 1;
+        let coords[7] = coords[7] + 1;
+        return;
+    }
+
+    method void rotate(int maxx, int maxy, int dir){
+        var int tx,ty, rx,ry;
+        var int i;
+        var Array temp;
+
+        let temp = Array.new(8);
+        let temp[0] = coords[0];
+        let temp[1] = coords[1];
+        let temp[2] = coords[2];
+        let temp[3] = coords[3];
+        let temp[4] = coords[4];
+        let temp[5] = coords[5];
+        let temp[6] = coords[6];
+        let temp[7] = coords[7];
+
+        // do Output.moveCursor(1,30);
+        // do Output.printInt(temp[0]);
+        // do Output.printString(",");
+        // do Output.printInt(temp[1]);
+        // do Output.moveCursor(2,30);
+        // do Output.printInt(temp[2]);
+        // do Output.printString(",");
+        // do Output.printInt(temp[3]);
+        // do Output.moveCursor(3,30);
+        // do Output.printInt(temp[4]);
+        // do Output.printString(",");
+        // do Output.printInt(temp[5]);
+        // do Output.moveCursor(4,30);
+        // do Output.printInt(temp[6]);
+        // do Output.printString(",");
+        // do Output.printInt(temp[7]);
+        
+        //translate to center
+        let tx = temp[0];
+        let ty = temp[1];
+
+        let temp[0] = temp[0] - tx;
+        let temp[1] = temp[1] - ty;
+        let temp[2] = temp[2] - tx;
+        let temp[3] = temp[3] - ty;
+        let temp[4] = temp[4] - tx;
+        let temp[5] = temp[5] - ty;
+        let temp[6] = temp[6] - tx;
+        let temp[7] = temp[7] - ty;
+
+        //using rotation matrix
+        // rx = (x * cos(-90)) - (y * sin(-90))
+        // ry = (x * sin(-90)) + (y * cos(-90))
+        let i = 0;
+        while(i<8){
+            let rx = (temp[i] * 0) - (temp[i+1] * -dir);
+            let ry = (temp[i] * -dir) + (temp[i+1] * 0);
+            let temp[i] = rx;
+            let temp[i+1] = ry;
+
+            let i = i + 2;
+        }
+
+        //translate back
+        let temp[0] = temp[0] + tx;
+        let temp[1] = temp[1] + ty;
+        let temp[2] = temp[2] + tx;
+        let temp[3] = temp[3] + ty;
+        let temp[4] = temp[4] + tx;
+        let temp[5] = temp[5] + ty;
+        let temp[6] = temp[6] + tx;
+        let temp[7] = temp[7] + ty;
+
+        // do Output.moveCursor(1,40);
+        // do Output.printInt(temp[0]);
+        // do Output.printString(",");
+        // do Output.printInt(temp[1]);
+        // do Output.moveCursor(2,40);
+        // do Output.printInt(temp[2]);
+        // do Output.printString(",");
+        // do Output.printInt(temp[3]);
+        // do Output.moveCursor(3,40);
+        // do Output.printInt(temp[4]);
+        // do Output.printString(",");
+        // do Output.printInt(temp[5]);
+        // do Output.moveCursor(4,40);
+        // do Output.printInt(temp[6]);
+        // do Output.printString(",");
+        // do Output.printInt(temp[7]);
+
+        //check if anything is outside left border
+        if((temp[0] < 0) | (temp[2] < 0) | (temp[4] < 0) | (temp[6] < 0)){
+            return;
+        }
+        //check if anything is outside right border
+        if((temp[0] > maxy) | (temp[2] > maxy) | (temp[4] > maxy) | (temp[6] > maxy)){
+            return;
+        }
+        //check if anything is outside top border
+        if((temp[1] < 0) | (temp[3] < 0) | (temp[5] < 0) | (temp[7] < 0)){
+            return;
+        }
+        //check if anything is outside bottom border
+        if((temp[1] > maxx) | (temp[3] > maxx) | (temp[5] > maxx) | (temp[7] > maxx)){
+            return;
+        }
+
+        let coords[0] = temp[0];
+        let coords[1] = temp[1];
+        let coords[2] = temp[2];
+        let coords[3] = temp[3];
+        let coords[4] = temp[4];
+        let coords[5] = temp[5];
+        let coords[6] = temp[6];
+        let coords[7] = temp[7];
+
+        do temp.dispose();
+
+        return;
+    }
+
+    method void dispose(){
+        do coords.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
+}

@@ -1,0 +1,421 @@
+class Board {
+    field int originx, originy;
+    field int boardWidth, boardHeight;
+    field int rows, columns;
+    field int cellWidth, cellHeight;
+    field int score;
+    field int tickCount, fallSpeed;
+    field Array cells;
+    field Piece currentPiece;
+    field boolean currentPieceExist;
+
+    field String randomNumberString;
+    field int randomIndex;
+
+    // field int dtick,dtick2;
+
+    constructor Board new(int ox, int oy, int r, int c, int bw, int bh){
+        var int i,j,index;
+
+        // let randomNumberString = "2435423445342344354434243445344342544344324544344344253401354234134504342314534342150343524134030012";
+        // let randomNumberString = "5432100011223344554434243445344342544344324544344344253401354234134504342314534342150343524134030012";
+        let randomNumberString = "11032543210001122334455";
+        let randomIndex = 0;
+
+        // let dtick = 0;
+        // let dtick2 = 0;
+
+        let score = 0;
+        let tickCount = 0;
+        let fallSpeed = 0;
+
+        let originx = ox;
+        let originy = oy;
+        let rows = r;
+        let columns = c;
+        let boardWidth = bw;
+        let boardHeight = bh;
+        let cellWidth = bw/c;
+        let cellHeight = bh/r;
+
+        let currentPieceExist = false;
+
+        let cells = Array.new(r*c);
+
+        let i = 0;
+        while(i < r){
+            let j = 0;
+            while(j < c){
+                let index = (i * c) + j;
+                let cells[index] = 0;
+                let j = j + 1;
+            }
+            let i = i + 1;
+        }
+        
+        return this;
+    }
+
+    method void movePieceLeft(){
+        var Array temp; 
+        var int index;
+        var boolean flag; 
+
+        let temp = currentPiece.getCoords();
+        let flag = true;
+        
+        //check if it can further go left
+        let index = (temp[0] * columns) + (temp[1]-1);
+        if((~((temp[1]-1) > -1)) | (cells[index] = 1)){
+            let flag = false;
+        }
+        let index = (temp[2] * columns) + (temp[3]-1);
+        if((~((temp[3]-1) > -1)) | (cells[index] = 1)){
+            let flag = false;
+        }
+        let index = (temp[4] * columns) + (temp[5]-1);
+        if((~((temp[5]-1) > -1)) | (cells[index] = 1)){
+            let flag = false;
+        }
+        let index = (temp[6] * columns) + (temp[7]-1);
+        if((~((temp[7]-1) > -1)) | (cells[index] = 1)){
+            let flag = false;
+        }
+
+        if(flag = true){
+            do currentPiece.moveLeft();
+        }
+
+        do temp.dispose();
+
+        return;
+    }
+    method void movePieceRight(){
+        var Array temp; 
+        var int index;
+        var boolean flag; 
+
+        let temp = currentPiece.getCoords();
+        let flag = true;
+        
+        //check if it can further go right
+        let index = (temp[0] * columns) + (temp[1]+1);
+        if((~((temp[1]+1) < columns)) | (cells[index] = 1)){
+            let flag = false;
+        }
+        let index = (temp[2] * columns) + (temp[3]+1);
+        if((~((temp[3]+1) < columns)) | (cells[index] = 1)){
+            let flag = false;
+        }
+        let index = (temp[4] * columns) + (temp[5]+1);
+        if((~((temp[5]+1) < columns)) | (cells[index] = 1)){
+            let flag = false;
+        }
+        let index = (temp[6] * columns) + (temp[7]+1);
+        if((~((temp[7]+1) < columns)) | (cells[index] = 1)){
+            let flag = false;
+        }
+
+        if(flag = true){
+            do currentPiece.moveRight();
+        }
+
+        do temp.dispose();
+        
+        return;
+    }
+    method void rotatePieceClockwise(){
+        do currentPiece.rotate(rows-1, columns-1, 1);
+        return;
+    }
+    method void rotatePieceAntiClockwise(){
+        do currentPiece.rotate(rows-1, columns-1, -1);
+        return;
+    }
+
+    method void tick(){
+        var int i,j,index,flag;
+        var Array temp;
+
+        let tickCount = tickCount + 1;
+        // let dtick = dtick + 1;
+        // if(dtick = 900){
+        //     let dtick = 0;
+        //     let dtick2 = dtick2 + 1;
+        // }
+        // do Output.moveCursor(2,25);
+        // do Output.printInt(dtick);
+        // do Output.printString(" ");
+        // do Output.printInt(dtick2);
+        // if((dtick2 > 0) & (dtick > 99)){
+        //     do Output.moveCursor(5,25);
+        //     do Output.printString("Inside Tick");
+        //     do Sys.wait(5000);
+        // }
+
+        //check for clearable rows, clear them and drop board blocks in empty space
+        let i = 0;
+        while(i < rows){
+            let flag = true;
+            let j = 0;
+            while(j < columns){
+                let index = (i * columns) + j;
+                if(cells[index] = 0){
+                    let flag = false;
+                }
+                let j = j + 1;
+            }
+            
+            if(flag = true){
+                do clearRow(i);
+                let score = score + 100;
+                let fallSpeed = fallSpeed + 1;
+            }
+            let i = i + 1;
+        }
+
+        // if(dtick > 1000){
+        //     do Output.moveCursor(6,25);
+        //     do Output.printString("Inside Tick 1");
+        //     do Sys.wait(5000);
+        // }
+
+        //if current piece exists then make current piece fall by one otherwise create it, every 10 - fallspeed ticks
+        if(tickCount = (10-fallSpeed)){
+            let tickCount = 0;
+
+            if(currentPieceExist = true){
+                let temp = currentPiece.getCoords();
+                let flag = true;
+                
+                //check if it can fall further
+                let index = ((temp[0]+1) * columns) + temp[1];
+                if((~((temp[0]+1) < rows)) | (cells[index] = 1)){
+                    let flag = false;
+                }
+                let index = ((temp[2]+1) * columns) + temp[3];
+                if((~((temp[2]+1) < rows)) | (cells[index] = 1)){
+                    let flag = false;
+                }
+                let index = ((temp[4]+1) * columns) + temp[5];
+                if((~((temp[4]+1) < rows)) | (cells[index] = 1)){
+                    let flag = false;
+                }
+                let index = ((temp[6]+1) * columns) + temp[7];
+                if((~((temp[6]+1) < rows)) | (cells[index] = 1)){
+                    let flag = false;
+                }
+
+                // if the current piece can't fall assimilate it into board
+                if(flag = true){
+                    do currentPiece.fallOne();
+                } else {
+                    let cells[(temp[0] * columns) + temp[1]] = 1;
+                    let cells[(temp[2] * columns) + temp[3]] = 1;
+                    let cells[(temp[4] * columns) + temp[5]] = 1;
+                    let cells[(temp[6] * columns) + temp[7]] = 1;
+
+                    let currentPieceExist = false;
+                    do currentPiece.dispose();
+                }
+
+                do temp.dispose();
+            } else {
+                // do Output.moveCursor(19,18);
+                // do Output.printInt(randomIndex);
+                // do Output.printString(",");
+                // do Output.printInt(randomNumberString.length());
+
+                let currentPiece = Piece.new(randomNumberString.charAt(randomIndex)-48, 0, columns/2);
+                let randomIndex = randomIndex + 1;
+                if(randomIndex = (randomNumberString.length()-1)){ let randomIndex = 0; }
+                let currentPieceExist = true;
+            }
+        }
+
+        // if(dtick > 1000){
+        //     do Output.moveCursor(7,25);
+        //     do Output.printString("Inside Tick End");
+        //     do Sys.wait(5000);
+        // }
+
+        return;
+    }
+
+    method void drawBoard(){
+        var int i,j,k,index;
+        var Array temp;
+
+        // if(dtick > 1000){
+        //     do Output.moveCursor(8,25);
+        //     do Output.printString("Inside Draw Board");
+        //     do Sys.wait(5000);
+        // }
+
+        //clear score area and show current score
+        do Output.moveCursor(17,18);
+        do Output.printString("Score: ");
+        do Output.printInt(score);
+
+        //clear the board
+        do Sys.wait(10);
+        do Screen.setColor(false);
+        do Screen.drawRectangle(originx, originy, originx + boardWidth, originy + boardHeight);
+        do Screen.setColor(true);
+
+        //draw the board
+        let i = 0;
+        while(i < rows){
+            let j = 0;
+            while(j < columns){
+                let index = (i * columns) + j;
+                if(cells[index] = 1){
+                    do Board.drawBox(originx + (j*cellWidth), originy + (i*cellHeight), cellWidth, cellHeight);
+                }
+                let j = j + 1;
+            }
+            let i = i + 1;
+        }
+
+        // let i = 0;
+        // while(i < rows){
+        //     let j = 0;
+        //     while(j < columns){
+        //         let index = (i * columns) + j;
+        //         do Output.moveCursor(2+i,30+j); 
+        //         do Output.printInt(cells[index]);
+        //         let j = j + 1;
+        //     }
+        //     let i = i + 1;
+        // }
+
+        // draw current piece
+        if(currentPieceExist = true){
+            let temp = currentPiece.getCoords();
+
+            // do Output.moveCursor(1,18);
+            // do Output.printInt(temp[0]);
+            // do Output.printString(",");
+            // do Output.printInt(temp[1]);
+            // do Output.moveCursor(2,18);
+            // do Output.printInt(temp[2]);
+            // do Output.printString(",");
+            // do Output.printInt(temp[3]);
+            // do Output.moveCursor(3,18);
+            // do Output.printInt(temp[4]);
+            // do Output.printString(",");
+            // do Output.printInt(temp[5]);
+            // do Output.moveCursor(4,18);
+            // do Output.printInt(temp[6]);
+            // do Output.printString(",");
+            // do Output.printInt(temp[7]);
+            
+            do Board.drawBox(originx + (temp[1] * cellWidth), originy + (temp[0] * cellHeight), cellWidth, cellHeight);
+            do Board.drawBox(originx + (temp[3] * cellWidth), originy + (temp[2] * cellHeight), cellWidth, cellHeight);
+            do Board.drawBox(originx + (temp[5] * cellWidth), originy + (temp[4] * cellHeight), cellWidth, cellHeight);
+            do Board.drawBox(originx + (temp[7] * cellWidth), originy + (temp[6] * cellHeight), cellWidth, cellHeight);
+        }
+
+        do temp.dispose();
+
+        // if(dtick > 1000){
+        //     do Output.moveCursor(9,25);
+        //     do Output.printString("Inside Draw Board End");
+        //     do Sys.wait(5000);
+        // }
+
+        return;
+    }
+
+    method boolean isGameOver(){
+        var int i;
+        var boolean flag;
+
+        let flag = false;
+        let i = 0;
+        while(i < columns){
+            if(cells[i] = 1){
+                let flag = true;
+            }
+            
+            let i = i + 1;
+        }
+        
+        return flag;
+    }
+
+    method void clearRow(int rn){
+        var int i,j,indexS,indexD;
+
+        // if(dtick > 1000){
+        //     do Output.moveCursor(10,25);
+        //     do Output.printString("Inside Clear row 1");
+        //     do Sys.wait(5000);
+        // }
+
+        let i = rn;
+        while(i > 0){
+            let j = 0;
+            while(j < columns){
+                let indexD = (i * columns) + j;
+                let indexS = ((i - 1) * columns) + j;
+                let cells[indexD] = cells[indexS];
+                let j = j + 1;
+            }
+
+            let i = i - 1;
+        }
+
+        // if(dtick > 1000){
+        //     do Output.moveCursor(11,25);
+        //     do Output.printString("Inside Clear row 2");
+        //     do Sys.wait(5000);
+        // }
+
+        return;
+    }
+
+    method void dispose(){
+        do cells.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    function void drawBox(int x, int y, int width, int height){
+        // var int memAddress;
+
+        // do Output.moveCursor(6,18);
+        // do Output.printInt(x);
+        // do Output.printString(" ");
+        // do Output.moveCursor(7,18);
+        // do Output.printInt(y);
+        // do Output.printString(" ");
+        // do Output.moveCursor(8,18);
+        // do Output.printInt(x+width);
+        // do Output.printString(" ");
+        // do Output.moveCursor(9,18);
+        // do Output.printInt(y+height);
+        // do Output.printString(" ");
+
+        do Screen.drawRectangle(x,y,x+width,y+height);
+
+        // let memAddress = 16384+ox;
+        // do Memory.poke(memAddress +32, 32767);
+        // do Memory.poke(memAddress +64, 16385);
+        // do Memory.poke(memAddress +96, 16385);
+        // do Memory.poke(memAddress +128, 20473);
+        // do Memory.poke(memAddress +160, 20473);
+        // do Memory.poke(memAddress +192, 20473);
+        // do Memory.poke(memAddress +224, 20473);
+        // do Memory.poke(memAddress +256, 20473);
+        // do Memory.poke(memAddress +288, 20473);
+        // do Memory.poke(memAddress +320, 20473);
+        // do Memory.poke(memAddress +352, 20473);
+        // do Memory.poke(memAddress +384, 20473);
+        // do Memory.poke(memAddress +416, 16385);
+        // do Memory.poke(memAddress +448, 16385);
+        // do Memory.poke(memAddress +480, 32767);
+        
+        return;
+    }
+}
